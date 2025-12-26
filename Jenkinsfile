@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Указываем установленный SonarQube Scanner
-        hudson.plugins.sonar.SonarRunnerInstallation 'SonarQube Scanner installations'
+        hudson.plugins.sonar.SonarRunnerInstallation 'SonarQubeScanner'
     }
 
     stages {
