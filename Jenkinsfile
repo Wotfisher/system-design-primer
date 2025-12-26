@@ -11,7 +11,7 @@ pipeline {
                 echo '📥 Клонирование репозитория...'
                 checkout([
                     $class: 'GitSCM',
-                    branches: [[name: '*/main']],
+                    branches: [[name: '*/master']],
                     userRemoteConfigs: [[
                         url: 'https://github.com/Wotfisher/system-design-primer.git',
                         credentialsId: ''
