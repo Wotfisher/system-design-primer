@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-    sonarRunner 'SonarQube'
+    'hudson.plugins.sonar.SonarRunnerInstallation' 'SonarQube'
 }
     
     stages {
