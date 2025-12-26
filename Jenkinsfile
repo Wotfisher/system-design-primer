@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     tools {
-    'hudson.plugins.sonar.SonarRunnerInstallation' 'SonarQube'
-}
-    
+        'hudson.plugins.sonar.SonarRunnerInstallation' 'SonarQube'
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
@@ -31,14 +31,14 @@ pipeline {
                 echo "Python файлов: $(find . -name "*.py" | wc -l)"
                 echo "Markdown файлов: $(find . -name "*.md" | wc -l)"
                 echo "JavaScript файлов: $(find . -name "*.js" | wc -l)"
-                
+
                 echo "=== Поиск потенциальных уязвимостей ==="
                 echo "1. Поиск hardcoded паролей..."
                 grep -r -i "password\\|passwd\\|secret\\|token" --include="*.py" --include="*.js" --include="*.json" . || echo "Не найдено"
-                
+
                 echo "2. Поиск SQL запросов..."
                 find . -type f -name "*.py" -exec grep -l "SELECT\\|INSERT\\|UPDATE\\|DELETE" {} \\; || echo "Не найдено"
-                
+
                 echo "3. Проверка конфигурационных файлов..."
                 find . -name "*.env*" -o -name "*.config*" -o -name "*.conf*" | head -10
                 '''
@@ -56,14 +56,14 @@ pipeline {
                 else
                     echo "ОШИБКА: README.md не найден"
                 fi
-                
+
                 echo "=== Тест 2: Проверка структуры ==="
                 if [ -d "solutions" ] || [ -d "src" ] || [ -d "lib" ]; then
                     echo "Структура проекта корректна"
                 else
                     echo "Предупреждение: нестандартная структура"
                 fi
-                
+
                 echo "=== Тест 3: Проверка зависимостей ==="
                 if [ -f "requirements.txt" ]; then
                     echo "Найдены Python зависимости:"
@@ -77,11 +77,12 @@ pipeline {
             }
         }
 
-        stages {
+        // ❌ БЫЛО: stages { 
+        // ✅ ИСПРАВЛЕНО: просто продолжаем список stage
         stage('SonarQube Analysis') {
             steps {
                 echo '🛡️ Запуск анализа SonarQube...'
-                withSonarQubeEnv('SonarQube') {  // имя сервера из Configure System
+                withSonarQubeEnv('SonarQube') {
                     sh '''
                     # Если sonar-scanner не в PATH, добавьте путь вручную
                     export PATH=$PATH:/opt/sonar-scanner*/bin
