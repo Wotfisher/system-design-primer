@@ -77,11 +77,14 @@ pipeline {
             }
         }
 
+        stages {
         stage('SonarQube Analysis') {
             steps {
                 echo '🛡️ Запуск анализа SonarQube...'
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('SonarQube') {  // имя сервера из Configure System
                     sh '''
+                    # Если sonar-scanner не в PATH, добавьте путь вручную
+                    export PATH=$PATH:/opt/sonar-scanner*/bin
                     sonar-scanner \
                       -Dsonar.projectKey=system-design-primer-audit \
                       -Dsonar.projectName="System Design Primer Audit" \
