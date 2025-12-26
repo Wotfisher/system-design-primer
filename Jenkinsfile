@@ -2,10 +2,7 @@ pipeline {
     agent any
 
     tools {
-    // ТОЧНО ОДНО ИЗ ЭТИХ:
     'hudson.plugins.sonar.SonarRunnerInstallation' 'SonarQube Scanner'
-    // ИЛИ
-    // 'hudson.plugins.sonar.SonarRunnerInstallation' 'SonarQube Scanner'
 }
     
     stages {
